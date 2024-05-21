@@ -1,6 +1,6 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from "react";
-import { IconButton, TextField } from "@mui/material";
 import { AddBox } from "@mui/icons-material";
+import { IconButton, TextField } from "@mui/material";
+import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 
 type Props = {
   addItem: (title: string) => Promise<any>;
@@ -18,7 +18,9 @@ export const AddItemForm = React.memo(function ({ addItem, disabled = false }: P
           setTitle("");
         })
         .catch((error) => {
-          setError(error.messages[0]);
+          if (error?.resultCode) {
+            setError(error.messages[0]);
+          }
         });
     } else {
       setError("Title is required");

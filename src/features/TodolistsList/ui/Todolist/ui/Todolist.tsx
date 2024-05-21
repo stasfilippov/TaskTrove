@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { TodolistDomainType } from "features/TodolistsList/model/todolist/todolistsSlice";
-import { tasksThunks } from "features/TodolistsList/model/tasks/tasks.reducer";
+import { tasksThunks } from "features/TodolistsList/model/tasks/tasksSlice";
 import { useActions } from "common/hooks";
 import { AddItemForm } from "common/components";
 import { TaskType } from "../../../api/tasks.api.types";
@@ -12,7 +12,7 @@ type Props = {
   todolist: TodolistDomainType;
   tasks: TaskType[];
 };
-export const Todolist = React.memo(function ({ todolist, tasks }: Props) {
+export const Todolist = React.memo(function({ todolist, tasks }: Props) {
   const { fetchTasks } = useActions(tasksThunks);
   const { addTask } = useActions(tasksThunks);
 

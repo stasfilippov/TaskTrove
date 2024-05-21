@@ -1,5 +1,5 @@
 import { TaskPriorities, TaskStatuses } from "../../../common/enums";
-import { UpdateDomainTaskModelType } from "../model/tasks/tasks.reducer";
+import { UpdateDomainTaskModelType } from "../model/tasks/tasksSlice";
 
 export type TaskType = {
   description: string;

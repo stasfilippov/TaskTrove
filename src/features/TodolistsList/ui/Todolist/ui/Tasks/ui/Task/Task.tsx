@@ -1,11 +1,11 @@
-import React, { ChangeEvent } from "react";
-import { Checkbox, IconButton } from "@mui/material";
 import { Delete } from "@mui/icons-material";
+import { Checkbox, IconButton } from "@mui/material";
 import { EditableSpan } from "common/components";
 import { TaskStatuses } from "common/enums";
-import { TaskType } from "../../../../../../api/tasks.api.types";
+import React, { ChangeEvent } from "react";
 import { useActions } from "../../../../../../../../common/hooks";
-import { tasksThunks } from "../../../../../../model/tasks/tasks.reducer";
+import { TaskType } from "../../../../../../api/tasks.api.types";
+import { tasksThunks } from "../../../../../../model/tasks/tasksSlice";
 import s from "./task.module.css";
 
 type Props = {
@@ -24,7 +24,7 @@ export const Task = ({ task, todolistId }: Props) => {
     updateTask({
       taskId: task.id,
       domainModel: { status: status },
-      todolistId,
+      todolistId
     });
   };
 

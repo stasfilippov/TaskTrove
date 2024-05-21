@@ -1,16 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { tasksReducer } from "features/TodolistsList/model/tasks/tasks.reducer";
+import { tasksSlice } from "features/TodolistsList/model/tasks/tasksSlice";
 import { todolistsSlice } from "features/TodolistsList/model/todolist/todolistsSlice";
 import { appSlice } from "app/appSlice";
 import { authSlice } from "features/auth/model/authSlice";
 
 export const store = configureStore({
   reducer: {
-    tasks: tasksReducer,
+    tasks: tasksSlice,
     todolists: todolistsSlice,
     app: appSlice,
-    auth: authSlice,
-  },
+    auth: authSlice
+  }
 });
 
 export type AppRootStateType = ReturnType<typeof store.getState>;

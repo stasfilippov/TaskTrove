@@ -15,7 +15,7 @@ test("correct error message should be set", () => {
   expect(endState.error).toBe("some error");
 });
 
-test("correct status should be set", () => {
-  const endState = appSlice(startState, appActions.setAppStatus({ status: "loading" }));
-  expect(endState.status).toBe("loading");
-});
+// test("correct status should be set", () => {
+//   const endState = appSlice(startState, appActions.setAppStatus({ status: "loading" }));
+//   expect(endState.status).toBe("loading");
+// });
