@@ -1,14 +1,15 @@
-import { useActions } from "../../../common/hooks";
-import { authThunks } from "../model/authSlice";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../model/auth.selectors";
+import { ResultCode } from "common/enums";
 import { FormikHelpers, useFormik } from "formik";
-import { LoginParamsType } from "../api/auth.api";
+import { useSelector } from "react-redux";
+import { useActions } from "../../../common/hooks";
 import { BaseResponseType } from "../../../common/types";
+import { LoginParamsType } from "../api/auth.api";
+import { selectIsLoggedIn } from "../model/auth.selectors";
+import { authThunks } from "../model/authSlice";
 
 type FormikErrorType = Omit<Partial<LoginParamsType>, "captcha">;
 export const useLogin = () => {
-  const { login } = useActions(authThunks);
+  const { login, getCaptchaURL } = useActions(authThunks);
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
@@ -38,6 +39,10 @@ export const useLogin = () => {
       login(values)
         .unwrap()
         .catch((reason: BaseResponseType) => {
+          if (reason.resultCode === ResultCode.Captcha) {
+            getCaptchaURL();
+          }
+
           reason.fieldsErrors?.forEach((fieldError) => {
             formikHelpers.setFieldError(fieldError.field, fieldError.error);
           });

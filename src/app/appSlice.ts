@@ -1,12 +1,12 @@
 import { createSlice, isAnyOf, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
-import { todolistsThunks } from "../features/TodolistsList/model/todolist/todolistsSlice";
 import { tasksThunks } from "../features/TodolistsList/model/tasks/tasksSlice";
+import { todolistsThunks } from "../features/TodolistsList/model/todolist/todolistsSlice";
 import { authThunks } from "../features/auth/model/authSlice";
 
 const initialState = {
   status: "idle" as RequestStatusType,
   error: null as string | null,
-  isInitialized: false
+  isInitialized: false,
 };
 
 export type AppInitialStateType = typeof initialState;
@@ -18,8 +18,7 @@ const slice = createSlice({
   reducers: {
     setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
       state.error = action.payload.error;
-    }
-
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -32,9 +31,13 @@ const slice = createSlice({
       .addMatcher(isRejected, (state, action: any) => {
         state.status = "failed";
         if (action.payload) {
-          if (action.type === todolistsThunks.addTodolist.rejected.type
-            || action.type === tasksThunks.addTask.rejected.type
-            || action.type === authThunks.initializeApp.rejected.type) return;
+          if (
+            action.type === todolistsThunks.addTodolist.rejected.type ||
+            action.type === tasksThunks.addTask.rejected.type ||
+            action.type === authThunks.initializeApp.rejected.type
+          )
+            return;
+
           state.error = action.payload.messages[0];
         } else {
           state.error = action.error.message ? action.error.message : "Some error occurred";
@@ -43,7 +46,7 @@ const slice = createSlice({
       .addMatcher(isAnyOf(authThunks.initializeApp.fulfilled, authThunks.initializeApp.rejected), (state, action) => {
         state.isInitialized = true;
       });
-  }
+  },
 });
 
 export const appSlice = slice.reducer;
